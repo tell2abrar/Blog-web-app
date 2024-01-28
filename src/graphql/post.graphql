@@ -1,0 +1,183 @@
+mutation createPost(
+  $title: String!
+  $text: String!
+  $image: String!
+  $tag: String!
+  $minutesToRead: String!
+) {
+  createPosts(
+    createPostDto: {
+      title: $title
+      text: $text
+      image: $image
+      tag: $tag
+      minutesToRead: $minutesToRead
+    }
+  ) {
+    response {
+      message
+      error
+      status
+    }
+    post {
+      id
+      title
+      text
+    }
+  }
+}
+
+mutation createComment($text: String!, $postId: Float!, $parentId: Float) {
+  createComment(createCommentDto: { text: $text, postId: $postId, parentId: $parentId }) {
+    id
+    text
+    userId
+    postsId
+    parentId
+    replyCount
+  }
+}
+
+query findAllPosts($skip: Int!, $take: Int!) {
+  findAllPosts(paginationInput: { skip: $skip, take: $take }) {
+    total
+    items {
+      id
+      title
+      text
+      image
+      tag
+      minutesToRead
+      userId
+      createdAt
+      user {
+        name
+        email
+      }
+      comments {
+        id
+        text
+        userId
+        postsId
+        parentId
+        replyCount
+        user {
+          name
+          email
+        }
+        createdAt
+      }
+      user {
+        name
+        email
+      }
+    }
+  }
+}
+
+query myPosts($skip: Int!, $take: Int!) {
+  myPosts(paginationInput: { skip: $skip, take: $take }) {
+    total
+    items {
+      id
+      title
+      text
+      image
+      tag
+      minutesToRead
+      userId
+      createdAt
+      user {
+        name
+        email
+      }
+      comments {
+        id
+        text
+        userId
+        postsId
+        parentId
+        replyCount
+        user {
+          name
+          email
+        }
+        createdAt
+      }
+      user {
+        name
+        email
+      }
+    }
+  }
+}
+
+query findPostById($id: Float!) {
+  findPostById(id: $id) {
+    response {
+      message
+      error
+      status
+    }
+    post {
+      id
+      title
+      text
+      image
+      tag
+      minutesToRead
+      userId
+      createdAt
+      user {
+        name
+        email
+      }
+      comments {
+        id
+        text
+        userId
+        postsId
+        parentId
+        replyCount
+        user {
+          name
+          email
+        }
+        createdAt
+      }
+    }
+  }
+}
+
+query replies($commentId: Float!) {
+  replies(commentId: $commentId) {
+    id
+    text
+    userId
+    postsId
+    parentId
+    replyCount
+    user {
+      name
+      email
+    }
+    createdAt
+  }
+}
+
+query getPosts($search: String!) {
+  getPosts(search: $search) {
+    id
+    title
+    text
+    image
+    tag
+    minutesToRead
+    userId
+    user {
+      name
+      email
+    }
+    createdAt
+  }
+}

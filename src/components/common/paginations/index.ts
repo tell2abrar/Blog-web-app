@@ -1,0 +1,1 @@
+export { PrimaryPagination } from './PrimaryPagination';
